@@ -153,6 +153,65 @@
             background: #116a31
         }
 
+        .cta-secondary {
+            background: var(--dark)
+        }
+
+        .cta-secondary:hover {
+            background: #0d1f15
+        }
+
+        .order-form {
+            max-width: 680px;
+            margin: 28px auto 0;
+            padding: 24px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 22px #163b1b16;
+            text-align: left
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .form-field-full {
+            grid-column: 1 / -1
+        }
+
+        .form-field label {
+            font-weight: bold;
+            color: var(--dark)
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #aebcaf;
+            border-radius: 6px;
+            font: inherit
+        }
+
+        .form-field textarea {
+            min-height: 110px;
+            resize: vertical
+        }
+
+        .form-submit {
+            margin-top: 20px;
+            cursor: pointer
+        }
+
         .small {
             font-size: .9rem;
             color: #536257
@@ -194,6 +253,18 @@
 
             .hero {
                 padding-top: 8px
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr
+            }
+
+            .form-field-full {
+                grid-column: auto
+            }
+
+            .order-form {
+                padding: 18px
             }
         }
     </style>
@@ -268,15 +339,80 @@
             <div class="wrap">
                 <h2>Take the First Step Toward Informed Wellness</h2>
                 <p class="text">Want to learn more about FAFORLIFE products and connect with the Herbal Health Cleanse
-                    community?</p><a class="cta"
+                    community?</p><a class="cta cta-secondary" href="#place-order">Place an Order</a>
+                <p><a class="cta"
                     href="https://chat.whatsapp.com/HgEwfd7QEgd1qGgyeSDfJO?s=cl&amp;p=a&amp;mlu=4&amp;ilr=4"
-                    target="_blank" rel="noopener noreferrer">👉 Join Our WhatsApp Group</a>
+                    target="_blank" rel="noopener noreferrer">👉 Get Your Faforlife Products Now!</a></p>
                 <p class="small">Join for product information and community updates.</p>
+            </div>
+        </section>
+        <section class="section" id="place-order">
+            <div class="wrap">
+                <h2>Place an Order</h2>
+                <p class="text">Fill in your details and your email app will open a prefilled order message addressed to
+                    oasiswellnesshealth@gmail.com. Review it and press send to complete your order request.</p>
+                <form class="order-form" id="order-form">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="customer-name">Full name</label>
+                            <input id="customer-name" name="Full name" autocomplete="name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="customer-email">Email address</label>
+                            <input id="customer-email" name="Email address" type="email" autocomplete="email" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="customer-phone">Phone number</label>
+                            <input id="customer-phone" name="Phone number" type="tel" autocomplete="tel" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="order-product">Product</label>
+                            <select id="order-product" name="Product" required>
+                                <option value="" selected disabled>Select a product</option>
+                                <option>Faforon</option>
+                                <option>Salud</option>
+                                <option>Spidex 19</option>
+                                <option>FAFORLIFE toothpaste</option>
+                                <option>Other / product enquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="order-quantity">Quantity</label>
+                            <input id="order-quantity" name="Quantity" type="number" min="1" value="1" required>
+                        </div>
+                        <div class="form-field form-field-full">
+                            <label for="delivery-address">Delivery address</label>
+                            <textarea id="delivery-address" name="Delivery address" autocomplete="street-address"
+                                required></textarea>
+                        </div>
+                        <div class="form-field form-field-full">
+                            <label for="order-notes">Additional notes (optional)</label>
+                            <textarea id="order-notes" name="Additional notes"></textarea>
+                        </div>
+                    </div>
+                    <button class="cta form-submit" type="submit">Continue to Email</button>
+                    <p class="small">Submitting opens your email app; your order is not sent until you press Send.
+                        Please don't include private medical information.</p>
+                </form>
             </div>
         </section>
     </main>
     <footer>© 2026 FAFORLIFE. All rights reserved.<br><small>Wellness information only. No product is presented as a
             cure or substitute for medical treatment.</small></footer>
+    <script>
+        document.getElementById("order-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const form = event.currentTarget;
+            const fields = new FormData(form);
+            const body = Array.from(fields.entries())
+                .map(([label, value]) => `${label}: ${value}`)
+                .join("\n");
+            const subject = `FAFORLIFE order - ${fields.get("Full name")}`;
+
+            window.location.href = `mailto:oasiswellnesshealth@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
+    </script>
 </body>
 
 </html>
